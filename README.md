@@ -1,19 +1,63 @@
-# :earth_americas: GDP dashboard template
+# LexiQuest — Next.js демо образовательной платформы по праву
 
-A simple Streamlit app showing the GDP of different countries in the world.
+Этот репозиторий содержит интерактивную демонстрацию LexiQuest: геймифицированного
+дашборда для изучения юридических дисциплин в духе Duolingo. Интерфейс реализован на
+Next.js 14 с App Router и Tailwind CSS и включает дорожку уроков, ежедневные цели,
+рейтинги лиг, магазин наград и профиль пользователя. Дополнительно доступна панель
+«Просмотр версий», позволяющая переключаться между тремя визуальными темами и
+маскотами.
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://gdp-dashboard-template.streamlit.app/)
+## Возможности
 
-### How to run it on your own machine
+- **Дорожка уроков** с показом статусов (книга, галочка, звезда, сундук, замок) и
+  прогрессом по разделам юридических курсов.
+- **Переключение дисциплин** и отображение актуальной статистики по каждому курсу.
+- **Ежедневные цели**, подсчитывающие выполненные уроки, XP и задания без ошибок.
+- **Рейтинги лиг** с подсветкой текущего места и тренда пользователя.
+- **Магазин** бонусов и косметики с балансом монет.
+- **Профиль** со стриком, достижениями, ключевой статистикой и аватаром.
+- **Галерея версий** с предварительным просмотром и мгновенным применением тем v2–v4,
+  включая SVG-маскотов (сову Лекса и разные образы коровы Музы).
 
-1. Install the requirements
+Все данные — моковые, но структурированы так, чтобы отразить будущую интеграцию с
+бекендом или CMS.
 
-   ```
-   $ pip install -r requirements.txt
-   ```
+## Запуск
 
-2. Run the app
+```bash
+npm config set registry https://registry.npmmirror.com
+npm install
+npm run dev
+```
 
-   ```
-   $ streamlit run streamlit_app.py
-   ```
+Приложение стартует на [http://localhost:3000](http://localhost:3000). При желании можно
+выполнить `npm run build` и `npm start` для production-режима. Если корпоративный
+реестр блокирует загрузку пакетов, временно переключите `npm config set registry` на
+доступное зеркало и повторите установку.
+
+## Структура проекта
+
+```
+app/
+  layout.tsx       — базовый layout и метаданные
+  page.tsx         — основная страница с логикой интерфейса
+  globals.css      — глобальные стили и утилиты Tailwind
+components/
+  MascotIllustrations.tsx — SVG-компоненты маскотов
+data/
+  mock-data.ts     — типы и мок-данные для курсов, целей, лиг и версий
+public/
+  (ресурсы, добавляемые по мере необходимости)
+```
+
+Дополнительно в корне: `tailwind.config.ts`, `postcss.config.mjs`, `tsconfig.json`,
+`next.config.mjs` и `package.json`.
+
+## Линтинг и сборка
+
+- `npm run lint` — проверка кода с eslint-config-next.
+- `npm run build` — production-сборка Next.js.
+
+## Лицензия
+
+Код распространяется по лицензии MIT (см. `LICENSE`).
