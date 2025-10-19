@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-slate-50 text-slate-800 antialiased;
+}
+
+a {
+  @apply text-sky-600 transition-colors hover:text-sky-700;
+}
+
+.card-surface {
+  background: radial-gradient(120% 120% at 10% 10%, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.85) 100%);
+  backdrop-filter: blur(12px);
+}
+
+.version-card-gradient {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.7) 100%);
+}
+
+.mascot-shadow {
+  filter: drop-shadow(0 18px 22px rgba(15, 23, 42, 0.15));
+}
+
+.scroll-shadow {
+  mask-image: linear-gradient(to bottom, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
+}
+
+.badge-chip {
+  @apply inline-flex items-center rounded-full border border-white/40 bg-white/40 px-2.5 py-1 text-xs font-medium text-slate-700 shadow-sm backdrop-blur;
+}
