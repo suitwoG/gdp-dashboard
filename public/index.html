@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LexiQuest демо</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="logo">
+        <span class="logo-icon">⚖️</span>
+        <div>
+          <p class="logo-title">LexiQuest</p>
+          <p class="logo-subtitle">Юридические приключения</p>
+        </div>
+      </div>
+      <nav class="main-nav" aria-label="Основная навигация">
+        <button class="nav-item active" data-section="learning">Обучение</button>
+        <button class="nav-item" data-section="leagues">Лиги</button>
+        <button class="nav-item" data-section="shop">Магазин</button>
+        <button class="nav-item" data-section="profile">Профиль</button>
+      </nav>
+      <div class="header-progress">
+        <div class="streak" title="Серия дней">
+          🔥 <span id="header-streak">12</span>
+        </div>
+        <div class="xp" title="Очки опыта за неделю">
+          ⭐ <span id="header-weekly-xp">0</span> XP
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <article class="card version-card" aria-labelledby="version-panel-title">
+        <header class="card-header version-card-header">
+          <div>
+            <h2 id="version-panel-title">Просмотр версий</h2>
+            <p id="version-description" class="card-subtitle"></p>
+          </div>
+          <label class="version-select" for="version-select">
+            <span>Версия:</span>
+            <select id="version-select" aria-label="Выбор версии интерфейса"></select>
+          </label>
+        </header>
+        <ul id="version-highlights" class="version-highlights" aria-label="Особенности версии"></ul>
+        <div id="version-gallery" class="version-gallery" role="list" aria-label="Сводка версий"></div>
+      </article>
+
+      <section id="learning" class="page-section visible" aria-labelledby="learning-title">
+        <div class="section-header">
+          <div>
+            <h1 id="learning-title">Путешествие по курсам</h1>
+            <p class="section-subtitle">Выбирайте дисциплину и продвигайтесь по дорожке уроков.</p>
+          </div>
+          <div class="course-switcher">
+            <label for="course-select">Курс:</label>
+            <select id="course-select" aria-label="Выбор дисциплины"></select>
+          </div>
+        </div>
+
+        <div class="learning-grid">
+          <article class="card course-path" aria-label="Дорожка уроков">
+            <header class="card-header">
+              <h2>Дорожка уроков</h2>
+              <p id="course-progress" class="card-subtitle">0 / 0 уроков выполнено</p>
+            </header>
+            <div id="course-track" class="track"></div>
+            <footer class="legend" aria-label="Легенда статусов уроков">
+              <span><span class="badge status-available">📘</span> Доступно</span>
+              <span><span class="badge status-complete">✅</span> Пройдено</span>
+              <span><span class="badge status-excellent">🌟</span> Отлично</span>
+              <span><span class="badge status-reward">🎁</span> Награда</span>
+              <span><span class="badge status-locked">🔒</span> Закрыто</span>
+            </footer>
+          </article>
+
+          <article class="card daily-goals" aria-label="Ежедневные задания">
+            <header class="card-header">
+              <h2>Цели на сегодня</h2>
+              <p class="card-subtitle">Выполните все задания и откройте сундук!</p>
+            </header>
+            <ul id="daily-goals-list" class="goal-list"></ul>
+            <div class="daily-reward" id="daily-reward"></div>
+          </article>
+
+          <article class="card mascot" aria-label="Советы наставницы Музы">
+            <header class="card-header">
+              <h2>Муза — ваша наставница</h2>
+            </header>
+            <div class="mascot-body">
+              <div class="mascot-illustration" role="img" aria-label="Маскот-юрист Муза"></div>
+              <div>
+                <p id="mascot-message" class="mascot-message"></p>
+                <p id="mascot-tip" class="mascot-tip"></p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="leagues" class="page-section" aria-labelledby="leagues-title">
+        <div class="section-header">
+          <div>
+            <h1 id="leagues-title">Сезон лиг</h1>
+            <p class="section-subtitle">Зарабатывайте XP и поднимайтесь выше.</p>
+          </div>
+          <div class="league-summary">
+            <p id="league-name" class="league-title"></p>
+            <p id="league-description" class="league-description"></p>
+          </div>
+        </div>
+        <article class="card league-table" aria-label="Таблица лидеров">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Место</th>
+                <th scope="col">Участник</th>
+                <th scope="col">XP</th>
+              </tr>
+            </thead>
+            <tbody id="league-table-body"></tbody>
+          </table>
+        </article>
+      </section>
+
+      <section id="shop" class="page-section" aria-labelledby="shop-title">
+        <div class="section-header">
+          <div>
+            <h1 id="shop-title">Магазин LexiQuest</h1>
+            <p class="section-subtitle">Потратьте монеты на бонусы и стиль.</p>
+          </div>
+          <div class="wallet" aria-label="Баланс монет">
+            <span>💰</span>
+            <span id="wallet-balance">0</span>
+          </div>
+        </div>
+        <div id="shop-categories" class="shop-categories"></div>
+      </section>
+
+      <section id="profile" class="page-section" aria-labelledby="profile-title">
+        <div class="section-header">
+          <div>
+            <h1 id="profile-title">Профиль студента</h1>
+            <p class="section-subtitle">Следите за прогрессом и достижениями.</p>
+          </div>
+        </div>
+
+        <div class="profile-grid">
+          <article class="card profile-summary" aria-label="Основная статистика">
+            <header class="card-header">
+              <h2 id="profile-name">Имя пользователя</h2>
+              <p id="profile-role" class="card-subtitle">Уровень</p>
+            </header>
+            <ul class="stat-list" id="profile-stats"></ul>
+          </article>
+
+          <article class="card achievements" aria-label="Достижения">
+            <header class="card-header">
+              <h2>Бейджи</h2>
+              <p class="card-subtitle">Соберите их все!</p>
+            </header>
+            <div id="achievements" class="achievement-grid"></div>
+          </article>
+
+          <article class="card recent-activity" aria-label="Недавняя активность">
+            <header class="card-header">
+              <h2>Активность</h2>
+              <p class="card-subtitle">Свежие события</p>
+            </header>
+            <ul id="activity-feed" class="activity-feed"></ul>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>LexiQuest • Демонстрационный прототип геймифицированной платформы по праву.</p>
+    </footer>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

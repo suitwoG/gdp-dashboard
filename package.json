@@ -1,0 +1,10 @@
+{
+  "name": "lexiquest-dashboard",
+  "version": "0.3.0",
+  "description": "Интерактивная демонстрация LexiQuest на ванильном JS",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "start": "node server.mjs"
+  }
+}
