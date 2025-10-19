@@ -1,0 +1,12 @@
+<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <path d="M24 6.5l4.52 9.48 10.48 1.52-7.56 7.37 1.77 10.38L24 30.84l-9.21 4.91 1.77-10.38-7.56-7.37 10.48-1.52L24 6.5z" fill="#FFE17A"/>
+  <path d="M24 9.6l-3.53 7.4a2 2 0 01-1.51 1.09l-8.17 1.19 5.9 5.75c.43.42.62 1.03.52 1.62l-1.39 8.1 7.27-3.82a2 2 0 011.86 0l7.27 3.82-1.39-8.1a1.9 1.9 0 01.52-1.62l5.9-5.75-8.17-1.19a2 2 0 01-1.51-1.09L24 9.6z" fill="#FFCD38"/>
+  <path d="M24 6.5l4.52 9.48 10.48 1.52-7.56 7.37 1.77 10.38L24 30.84l-9.21 4.91 1.77-10.38-7.56-7.37 10.48-1.52L24 6.5z" stroke="#FFF2BF" stroke-width="1.2" stroke-linejoin="round" opacity="0.6"/>
+  <path d="M24 6.5l4.52 9.48 10.48 1.52-7.56 7.37 1.77 10.38L24 30.84l-9.21 4.91 1.77-10.38-7.56-7.37 10.48-1.52L24 6.5z" fill="url(#glow)" opacity="0.32"/>
+  <defs>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(24 21) scale(13)">
+      <stop stop-color="#FFFFFF" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#FFBB0D" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>
