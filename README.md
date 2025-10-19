@@ -25,12 +25,15 @@ Next.js 14 с App Router и Tailwind CSS и включает дорожку ур
 ## Запуск
 
 ```bash
+npm config set registry https://registry.npmmirror.com
 npm install
 npm run dev
 ```
 
 Приложение стартует на [http://localhost:3000](http://localhost:3000). При желании можно
-выполнить `npm run build` и `npm start` для production-режима.
+выполнить `npm run build` и `npm start` для production-режима. Если корпоративный
+реестр блокирует загрузку пакетов, временно переключите `npm config set registry` на
+доступное зеркало и повторите установку.
 
 ## Структура проекта
 
