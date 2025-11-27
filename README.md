@@ -1,19 +1,32 @@
-# :earth_americas: GDP dashboard template
+# Lex Moscua
 
-A simple Streamlit app showing the GDP of different countries in the world.
+A Duolingo-inspired law learning experience built with Next.js and Tailwind CSS. The app uses a colorful, card-based layout to present your learning path, weekly progress, achievements, and store upgrades.
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://gdp-dashboard-template.streamlit.app/)
+## Getting started
 
-### How to run it on your own machine
+1. Install dependencies
 
-1. Install the requirements
-
-   ```
-   $ pip install -r requirements.txt
+   ```bash
+   npm install
    ```
 
-2. Run the app
+   If your environment restricts access to npm, configure your registry or proxy before installing.
 
+2. Run the development server
+
+   ```bash
+   npm run dev
    ```
-   $ streamlit run streamlit_app.py
-   ```
+
+3. Open http://localhost:3000 in your browser to explore the Learn, Leaderboard, Store, and Profile dashboards.
+
+## Scripts
+
+- `npm run dev` – start the Next.js dev server
+- `npm run build` – build for production
+- `npm run start` – run the production server
+- `npm run lint` – lint the project
+
+## Styling
+
+Tailwind utilities are used directly in JSX/TSX. Global styles are limited to the Tailwind base/components/utilities imports.
