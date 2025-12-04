@@ -10,7 +10,11 @@ A Duolingo-inspired law learning experience built with Next.js and Tailwind CSS.
    npm install
    ```
 
-   If your environment restricts access to npm, configure your registry or proxy before installing.
+   If your environment blocks the default registry, set an accessible registry and ensure `npm_config_http_proxy` / `npm_config_https_proxy` are unset:
+
+   ```bash
+   npm_config_http_proxy= npm_config_https_proxy= npm install --registry=https://registry.npmjs.org
+   ```
 
 2. Run the development server
 
