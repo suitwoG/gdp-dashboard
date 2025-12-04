@@ -5,6 +5,7 @@ const navLinks = [
   { href: "/leaderboard", label: "Leaderboard" },
   { href: "/store", label: "Store" },
   { href: "/profile", label: "Profile" },
+  { href: "/auth", label: "Login" },
 ];
 
 export function NavBar() {

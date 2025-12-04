@@ -24,6 +24,9 @@ A Duolingo-inspired law learning experience built with Next.js and Tailwind CSS.
 
 3. Open http://localhost:3000 in your browser to explore the Learn, Leaderboard, Store, and Profile dashboards.
 
+4. Need a quick login/register flow? Visit http://localhost:3000/auth. Authentication is client-side only and stores data in
+   your browser's localStorage (no backend required).
+
 ## Scripts
 
 - `npm run dev` – start the Next.js dev server
