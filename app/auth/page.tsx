@@ -3,7 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
-const STORAGE_KEY = "lex-auth-user";
+const USERS_KEY = "lex-auth-users";
+const SESSION_KEY = "lex-auth-session";
 
 type StoredUser = {
   name: string;
@@ -26,18 +27,27 @@ export default function AuthPage() {
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [storedUser, setStoredUser] = useState<StoredUser | null>(null);
+  const [allUsers, setAllUsers] = useState<StoredUser[]>([]);
 
   useEffect(() => {
-    const raw = typeof window !== "undefined" ? window.localStorage.getItem(STORAGE_KEY) : null;
-    if (raw) {
-      try {
-        const parsed = JSON.parse(raw) as StoredUser;
-        setStoredUser(parsed);
-        setStatus(`Signed in as ${parsed.name}`);
-      } catch (err) {
-        console.error("Failed to parse stored user", err);
-        window.localStorage.removeItem(STORAGE_KEY);
+    if (typeof window === "undefined") return;
+
+    try {
+      const rawUsers = window.localStorage.getItem(USERS_KEY);
+      const parsedUsers = rawUsers ? (JSON.parse(rawUsers) as StoredUser[]) : [];
+      setAllUsers(parsedUsers);
+
+      const sessionEmail = window.localStorage.getItem(SESSION_KEY);
+      const sessionUser = parsedUsers.find((u) => u.email === sessionEmail) || null;
+      if (sessionUser) {
+        setStoredUser(sessionUser);
+        setStatus(`Signed in as ${sessionUser.name}`);
+        setEmail(sessionUser.email);
       }
+    } catch (err) {
+      console.error("Failed to restore auth state", err);
+      window.localStorage.removeItem(USERS_KEY);
+      window.localStorage.removeItem(SESSION_KEY);
     }
   }, []);
 
@@ -65,19 +75,32 @@ export default function AuthPage() {
       return;
     }
 
+    const normalizedEmail = email.trim().toLowerCase();
+    const exists = allUsers.some((user) => user.email === normalizedEmail);
+    if (exists) {
+      setError("Этот e-mail уже зарегистрирован. Попробуйте войти.");
+      setMode("login");
+      return;
+    }
+
     const user: StoredUser = {
       name: name.trim(),
-      email: email.trim().toLowerCase(),
+      email: normalizedEmail,
       password,
       createdAt: new Date().toISOString(),
     };
 
+    const nextUsers = [...allUsers, user];
+    setAllUsers(nextUsers);
     setStoredUser(user);
     setStatus(`Signed in as ${user.name}`);
-    setMessage("Регистрация завершена! Теперь вы можете входить с этими данными.");
+    setMessage("Регистрация завершена! Вы вошли в демо-аккаунт.");
+    setMode("login");
+    setEmail(user.email);
 
     if (typeof window !== "undefined") {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+      window.localStorage.setItem(USERS_KEY, JSON.stringify(nextUsers));
+      window.localStorage.setItem(SESSION_KEY, user.email);
     }
   };
 
@@ -85,18 +108,20 @@ export default function AuthPage() {
     event.preventDefault();
     resetMessages();
 
-    if (!storedUser) {
-      setError("Сначала зарегистрируйтесь — локальный аккаунт пока не создан.");
-      return;
-    }
-
-    if (email.trim().toLowerCase() !== storedUser.email || password !== storedUser.password) {
+    const normalizedEmail = email.trim().toLowerCase();
+    const user = allUsers.find((u) => u.email === normalizedEmail);
+    if (!user || user.password !== password) {
       setError("Неверный e-mail или пароль. Попробуйте снова.");
       return;
     }
 
-    setStatus(`Signed in as ${storedUser.name}`);
+    setStoredUser(user);
+    setStatus(`Signed in as ${user.name}`);
     setMessage("Вы успешно вошли. Приятного обучения!");
+
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(SESSION_KEY, user.email);
+    }
   };
 
   const handleSignOut = () => {
@@ -104,8 +129,23 @@ export default function AuthPage() {
     setStatus(null);
     setStoredUser(null);
     if (typeof window !== "undefined") {
-      window.localStorage.removeItem(STORAGE_KEY);
+      window.localStorage.removeItem(SESSION_KEY);
     }
+  };
+
+  const handleReset = () => {
+    resetMessages();
+    setStatus(null);
+    setStoredUser(null);
+    setAllUsers([]);
+    setEmail("");
+    setPassword("");
+    setName("");
+    if (typeof window !== "undefined") {
+      window.localStorage.removeItem(USERS_KEY);
+      window.localStorage.removeItem(SESSION_KEY);
+    }
+    setMessage("Демо-данные очищены. Зарегистрируйтесь заново, чтобы протестировать вход.");
   };
 
   const onSubmit = mode === "register" ? handleRegister : handleLogin;
@@ -236,6 +276,13 @@ export default function AuthPage() {
               type="button"
             >
               Выйти и очистить данные
+            </button>
+            <button
+              onClick={handleReset}
+              className="inline-flex items-center justify-center rounded-full border border-rose-200 bg-rose-50 px-4 py-2 text-sm font-medium text-rose-700 hover:bg-rose-100 transition"
+              type="button"
+            >
+              Полный сброс демо
             </button>
           </div>
 
