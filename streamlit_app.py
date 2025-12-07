@@ -133,19 +133,44 @@ for i, country in enumerate(selected_countries):
     col = cols[i % len(cols)]
 
     with col:
-        first_gdp = first_year[first_year['Country Code'] == country]['GDP'].iat[0] / 1000000000
-        last_gdp = last_year[last_year['Country Code'] == country]['GDP'].iat[0] / 1000000000
+        first_values = first_year[first_year['Country Code'] == country]['GDP']
+        last_values = last_year[last_year['Country Code'] == country]['GDP']
 
-        if math.isnan(first_gdp):
+        first_gdp = first_values.iat[0] / 1000000000 if not first_values.empty else math.nan
+        last_gdp = last_values.iat[0] / 1000000000 if not last_values.empty else math.nan
+
+        if math.isnan(first_gdp) or math.isnan(last_gdp):
             growth = 'n/a'
             delta_color = 'off'
         else:
             growth = f'{last_gdp / first_gdp:,.2f}x'
             delta_color = 'normal'
 
+        value = f'{last_gdp:,.0f}B' if not math.isnan(last_gdp) else 'n/a'
+
         st.metric(
             label=f'{country} GDP',
-            value=f'{last_gdp:,.0f}B',
+            value=value,
             delta=growth,
             delta_color=delta_color
         )
+
+st.subheader('Latest GDP ranking', divider='gray')
+
+latest_year_data = filtered_gdp_df[filtered_gdp_df['Year'] == to_year].dropna(subset=['GDP']).copy()
+
+if latest_year_data.empty:
+    st.info('No GDP data is available for the selected countries in this year.')
+else:
+    latest_year_data['GDP (billions USD)'] = latest_year_data['GDP'] / 1_000_000_000
+    ranking = latest_year_data[['Country Code', 'GDP (billions USD)']].sort_values(
+        by='GDP (billions USD)',
+        ascending=False,
+    )
+
+    st.dataframe(
+        ranking,
+        hide_index=True,
+        column_config={'GDP (billions USD)': st.column_config.NumberColumn(format='%0.0f')},
+        use_container_width=True,
+    )
